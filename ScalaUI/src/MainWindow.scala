@@ -3,11 +3,14 @@ import scala.io.Source
 import scala.swing.FileChooser
 
 class UI extends MainFrame {
+  var ntopics: Int = 0
+  var niterations: Int = 0
+  var nfile = new String
   def restrictHeight(s: Component) {
     s.maximumSize = new Dimension(Short.MaxValue, s.preferredSize.height)
   }
-  
   title = "Topic Modeling"
+  //var test = new TextField("4", 4)
   var numberOfTopics = new TextField(columns = 5)
   var numberOfIterations = new TextField(columns = 5)
   val status = new TextArea { rows = 8; lineWrap = true; wordWrap = true }
@@ -48,19 +51,32 @@ class UI extends MainFrame {
   }
   
   def report(){
+    ntopics = Integer.parseInt(numberOfTopics.text)
+    niterations = Integer.parseInt(numberOfIterations.text)
+    nfile = filePath.text
+    println(ntopics)
+    println(niterations)
+    println(nfile)
     status.append("Number Of Topics: " + numberOfTopics.text + " ")
     status.append("Number of iterations: " + numberOfIterations.text)
+    
   }
   def chooseFile() {
       if(chooser.showOpenDialog(null) == FileChooser.Result.Approve) {
          filePath.text = chooser.selectedFile.getAbsolutePath
       }
   }
+  
+  def getTopics = ntopics;
+  
+  def getIterations = niterations;
+  
+  def getFileName  = nfile;
 }
 
 object MainWindow {
   def main(args: Array[String]) {
-    val ui = new UI
+    val ui = new UI()
     ui.visible = true
     println("End of main function")
   }
